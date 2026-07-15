@@ -1,0 +1,22 @@
+[Unit]
+Description=Redis persistent key-value database
+Documentation=https://redis.io/documentation
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/redis-server /etc/redis/redis.conf --supervised systemd
+TimeoutStartSec=infinity
+TimeoutStopSec=infinity
+Restart=on-failure
+
+User=redis
+Group=redis
+RuntimeDirectory=redis
+RuntimeDirectoryMode=0750
+UMask=0077
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
