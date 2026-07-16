@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        A persistent key-value database
 License:        RSALv2 or SSPLv1
 URL:            https://redis.io
-Source0:        redis-7.4.9.tar.gz
+Source0:        redis-7.4.9.zip
 Source1:        redis.conf
 Source2:        redis.service
 
@@ -13,6 +13,7 @@ BuildRequires:  openssl-devel
 BuildRequires:  systemd-devel
 BuildRequires:  jemalloc-devel
 BuildRequires:  tcl
+BuildRequires:  unzip
 %{?systemd_requires}
 BuildRequires:  systemd-rpm-macros
 
@@ -83,5 +84,12 @@ exit 0
 %attr(0750, redis, redis) %dir %{_localstatedir}/log/redis
 
 %changelog
-* Wed Jul 15 2026 L_Admin <l_admin@lab.corp> - 7.4.9-1
-- Initial RPM build of Redis 7.4.9 for RED OS 8
+* Tue May 05 2026 Redis <noreply@redis.io> - 7.4.9
+- Security fixes:
+- (CVE-2026-23479) Use-After-Free in unblock client flow may lead to Remote Code Execution.
+- (CVE-2026-25243) Invalid memory access in RESTORE may lead to Remote Code Execution
+- (CVE-2026-23631) Lua Use-After-Free may lead to remote code execution
+- Bug fixes:
+- SUBSCRIBE, PSUBSCRIBE, SSUBSCRIBE: crash on OOM (RED-167788)
+- CONFIG SET: some settings allow invalid characters (RED-167787)
+- SCRIPT DEBUG: potential crash on scripts (RED-175507)
